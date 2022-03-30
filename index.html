@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="./CSS/reset.css">
+    <link rel="stylesheet" href="./CSS/header.css">
+    <link rel="stylesheet" href="./CSS/footer.css">
     <script src="main.js" defer></script>
     <title>Jogos</title>
 </head>
@@ -11,12 +14,11 @@
     <header>
         <h1>Projeto Jogos</h1>
         <input type="text" placeholder="Procure seu jogo..." id="jogo" list="lista-jogos">
-        <datalist id="lista-jogos">
-        </datalist>
+        <span class="icone"></span>
         <button id="pesquisar">Pesquisar</button>
     </header>
-    <main onload="carregarJogos()">
-        <div id="card-container">
+    <main>
+        <div class="card-container">
             <div class="card">
 
             </div>

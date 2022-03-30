@@ -8,30 +8,30 @@ const pesquisarJogos = async() => {
     return data
 }
 
-function arrayToObj(genres) {
-    let resposta = {}
-    for(const element of genres) {
-        resposta[element[0]] = element[1]
-    }
-    return resposta
-}
+const pegarGenero = (genero) => genero.name
 
-const criarCard = ({background_image, name, resposta}) => {
+const pegarPlataformas = (plataforma) => plataforma.platform.name
+
+const criarCard = ({background_image, name, genres, parent_platforms}) => {
+    
     const card = document.createElement('div')
     card.classList.add('card-jogo')
     card.innerHTML = `
-    <div class="card-image-container">
+    <span class="card-image-container">
         <img src=${background_image} class="card-image">
-    </div>
+    </span>
     <span class="card-nome">
         <h1>${name}</h1>
     </span>
-    <span class="card-plataforma">
-         ${resposta}
+    <span class="card-generos">
+         ${genres.map(pegarGenero)}
     </span>
-
+    <span class="card-plataforma">
+        ${parent_platforms.map(pegarPlataformas)}
+    </span>
     `
-    console.log(resposta)
+    // console.log(parent_platforms)
+    
 //     <div class="card-image-container">
 //     <img src="${produto.imagem}" alt="monitor" class="card-image">
 //      </div>
@@ -45,7 +45,9 @@ const criarCard = ({background_image, name, resposta}) => {
 //     R$ ${produto.genero}
 //      </span>
     return card;
+    return card;
 }
+
 
 const carregarJogos = async() => {
     const container = document.querySelector('.card')
@@ -57,11 +59,17 @@ const carregarJogos = async() => {
 
 carregarJogos()
 
+// const imgs = document.querySelector(".card-image-container")
+// const img = document.querySelector(".card-image-container img")
 
+// let cont = 0;
 
+// function carrosel (){
+//     cont++;
 
+//     if(cont > img.length -1){
+//         cont = 0;
+//     }
 
-
-
-
-
+//     imgs.style.transforme = `translateX(${-cont * 500}px)`;
+// }
