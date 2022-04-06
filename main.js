@@ -10,7 +10,7 @@ const pesquisarJogos = async() => {
 
 const pegarGenero = (genero) => genero.name
 
-const pegarPlataformas = (plataforma) => plataforma.platform.name
+// const pegarPlataformas = (plataforma) => plataforma.platform.name
 
 const criarCard = ({background_image, name, genres, parent_platforms}) => {
     
@@ -26,28 +26,25 @@ const criarCard = ({background_image, name, genres, parent_platforms}) => {
     <span class="card-generos">
          ${genres.map(pegarGenero)}
     </span>
-    <span class="card-plataforma">
-        ${parent_platforms.map(pegarPlataformas)}
-    </span>
-    `
-    // console.log(parent_platforms)
     
-//     <div class="card-image-container">
-//     <img src="${produto.imagem}" alt="monitor" class="card-image">
-//      </div>
-//      <span class="card-nome">
-//     ${produto.nome}
-//      </span>
-//      <span class="card-plataforma">
-//     ${produto.plataforma}
-//      </span>
-//       <span class="card-genero">
-//     R$ ${produto.genero}
-//      </span>
-    return card;
+    `
+    // <span class="card-plataforma">
+        // ${parent_platforms.map(pegarPlataformas)}
+    //</span>
+    
+    // console.log(parent_platforms)
     return card;
 }
 
+const carregarPrincipal = async() => {
+    const container = document.querySelector('.card2')
+    const {results} = await pesquisarJogos()
+    const cards = results.map(criarCard)
+    container.replaceChildren(...cards)
+    return cards
+}
+
+carregarPrincipal()
 
 const carregarJogos = async() => {
     const container = document.querySelector('.card')

@@ -1,14 +1,4 @@
 
-body {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-main{
-    flex-grow: 1;
-}
-
-
 /* ************** CARDS *************** */
 
 .card-container{
@@ -16,13 +6,18 @@ main{
     display: flex;
     gap: 10px;
     height: 100%;
-    width: 100%;
     background-color: aqua;
     flex-direction: row;
-    height: 200px;
+    margin: auto;
 }
-.card{
+.card-container2{
+    margin-top: 200px;
+}
+.card, .card2{
     display: flex;
+    max-width: 1300px;
+    flex-wrap: wrap;
+    margin: auto;
 }
 
 .card-jogo{

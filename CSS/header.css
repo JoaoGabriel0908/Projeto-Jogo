@@ -1,7 +1,32 @@
 header{
-    background-color: chocolate;
-    height: 200px;
+    display: flex;
+    padding: 20px;
+    margin-right: auto;
 }
 span.icone{
-    position: relative;
+    position: relative; 
+}
+input + span.icone::before{
+    content: url(../imgs/lupa\ 1.png);
+    background-size: contain;
+}
+input + span.icone::before{
+    position: absolute;
+    right: 20px;
+    margin-top: 7px;
+}
+input{
+    height: 70px;
+    padding: 20px;
+    opacity: 50%;
+}
+div.home{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+div.home ul{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
