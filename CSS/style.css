@@ -6,7 +6,6 @@
     display: flex;
     gap: 10px;
     height: 100%;
-    background-color: aqua;
     flex-direction: row;
     margin: auto;
 }
@@ -18,40 +17,44 @@
     max-width: 1300px;
     flex-wrap: wrap;
     margin: auto;
+    gap: 30px;
 }
 
 .card-jogo{
     display: flex;
     flex-direction: column;
     height: 360px;
-    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
     padding: 8px;
 }
 .card-jogo:hover{
     cursor: pointer;
-    box-shadow: 0px 0px 20px #000000;
+    box-shadow: 0px 0px 20px violet;
     transition: box-shadow 1s;
 }
 
-.card-image-container{
-    width: 200px;
+.card-jogo .card-image-container{
+    width: 100%;
     height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
 }
 
 .card-image-container img{
+    object-fit: cover;
+    background-size: cover;
     height: 200px;
-    width: 200px;
+    width: 100%;
 }
-
 
 .card-nome{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1rem;
     font-weight: 500;
+    text-align: center;
+    background-color: transparent;
 }
 
 .card-plataforma{
@@ -62,4 +65,10 @@
 .card-genero{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: .8rem;
+}
+.info{
+    display: inline;
+}
+.info2{
+    float: right;
 }

@@ -1,7 +1,11 @@
 header{
     display: flex;
     padding: 20px;
-    margin-right: auto;
+    margin: auto;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 1300px;
 }
 span.icone{
     position: relative; 
@@ -19,6 +23,7 @@ input{
     height: 70px;
     padding: 20px;
     opacity: 50%;
+    border-radius: 10px;
 }
 div.home{
     display: flex;
@@ -26,7 +31,25 @@ div.home{
     justify-content: space-around;
 }
 div.home ul{
-    display: flex;
-    align-items: center;
     justify-content: space-between;
+    display: flex;
+    font-size: 24px;
+    list-style: none;
+    color: white;
+    width: 500px;
+}
+div.home ul li{
+    transition: .5s;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+div.home ul a{
+    text-decoration: none;
+    color: white;
+    transition: .5s;
+}
+div.home ul li:hover{
+    background-color: violet;
+    color: black;
 }
