@@ -6,6 +6,11 @@ header{
     align-items: center;
     width: 100%;
     max-width: 1300px;
+    position: fixed;
+    top: 0;
+}
+header::-webkit-scrollbar{
+    background-color: aqua;
 }
 span.icone{
     position: relative; 
@@ -48,6 +53,9 @@ div.home ul a{
     text-decoration: none;
     color: white;
     transition: .5s;
+}
+div.home ul a:hover{
+    color: black;
 }
 div.home ul li:hover{
     background-color: violet;

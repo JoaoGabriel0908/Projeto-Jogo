@@ -2,7 +2,15 @@
 
 const pesquisarJogos = async() => {
     const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
-    const url = `https://api.rawg.io/api/games?key=${apikey}`
+    const url = `https://api.rawg.io/api/games?key=${apikey}&page=1`
+    const response = await fetch(url)
+    const data = await response.json()
+    return data
+}
+
+const pesquisarJogos2 = async() => {
+    const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
+    const url = `https://api.rawg.io/api/games?key=${apikey}&page=2`
     const response = await fetch(url)
     const data = await response.json()
     return data
@@ -16,7 +24,11 @@ const pegarDescricao = async(id) => {
     return data;
 }
 
-const pegarGenero = (genero) => genero.name
+const pegarGenero = (genero) => `
+    <a href="#" onClick="buscarJogos(${genero.name})">
+        ${genero.name}
+    </a>
+    `
 
 // const pegarPlataformas = (plataforma) => plataforma.platform.name
 
@@ -33,7 +45,7 @@ const criarCard = ({background_image, name, genres, parent_platforms, released})
         <h1>${name}</h1>
     </span>
     <span class="card-generos">
-        <p class="info"> Genero: <p class="info2">${genres.map(pegarGenero)}</p></p>
+        <p class="info"> Genero: <p class="info2">${genres.map(pegarGenero).join(' / ')}</p></p>
     </span>
     <span class="card-data">
         <p class="info"> Lançamento: <p class="info2">${released}</p></p>
@@ -50,25 +62,15 @@ const criarCard = ({background_image, name, genres, parent_platforms, released})
 }
 
 
-const carregarPrincipal = async() => {
-    const container = document.querySelector('.card2')
-    const {results} = await pesquisarJogos()
-    const cards = results.map(criarCard)
-    container.replaceChildren(...cards)
-    return cards
-}
+// const carregarPrincipal = async() => {
+//     const container = document.querySelector('.card2')
+//     const {results} = await pesquisarJogos()
+//     const cards = results.map(criarCard)
+//     container.replaceChildren(...cards)
+//     return cards
+// }
 
-carregarPrincipal()
-
-const carregarDescricao = async(id) => {
-    const container = document.querySelector('.card2')
-    const {results} = await pegarDescricao()
-    const cards = results.map(criarCard)
-    container.replaceChildren(...cards)
-    return cards
-}
-
-carregarDescricao()
+// carregarPrincipal()
 
 const carregarJogos = async() => {
     const container = document.querySelector('.card')
@@ -80,6 +82,16 @@ const carregarJogos = async() => {
 
 carregarJogos()
 
+const carregarJogos2 = async() => {
+    const container = document.querySelector('.card2')
+    const {results} = await pesquisarJogos2()
+    const cards = results.map(criarCard)
+    container.replaceChildren(...cards)
+    return cards
+}
+
+carregarJogos2()
+
 const buscarGenero = async() => {
     const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
     const url = `https://api.rawg.io/api/genres?key=${apikey}`
@@ -88,18 +100,18 @@ const buscarGenero = async() => {
     return data
 }
 
-const criarGenero = ({name}) => {
+const criarGenero = ({name, image_background}) => {
     
     const card = document.createElement('div')
     card.classList.add('card')
     card.innerHTML = `
         <span class="card-image-container">
-            <img src=${background_image} class="card-image">
+            <img src=${image_background} class="card-image">
         </span>
         <span class="card-nome">
             <h1>${name}</h1>
         </span>
-    
+
     `
     return card
 }
@@ -112,7 +124,7 @@ const carregarGeneros = async() => {
     return generos
 }
 
-// carregarGeneros()
+carregarGeneros()
 
 const criarJogos = ({games, image_background}) => {
     
@@ -138,64 +150,105 @@ const jogosGeneros = async() => {
     return jogos
 }
 
+const carregarInfos = async (name) =>{
+    const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
+    const url = `https://api.rawg.io/api/games?key=${apikey}&search=${name}`
+    const response = await fetch(url);
+    return response.json();
+}
+
+const links = (genres) = 
+    `<a href="#" onClick="pesquisarJogos(${genres})"
+        ${genres}
+    </a>`
 
 
-//function para limpar elementos ao pesquisar
-const limparElementos = (elemento) => {
-    while (elemento.firstChild) {
-      elemento.removeChild(elemento.lastChild);
+const createCard = ({background_image, name, genres, released}) => {
+    
+    const card = document.createElement('div')
+    card.classList.add('card')
+    card.innerHTML = `
+        <span class="card-image-container">
+            <img src=${background_image} class="card-image">
+        </span>
+        <div class="descricao">
+        <span class="card-nome">
+            <h1>${name}</h1>
+        </span>
+        <span class="card-generos">
+            <p class="info"> Genero: <p class="info2">${genres.map(pegarGenero)}</p></p>
+        </span>
+        <span class="card-data">
+            <p class="info"> Lançamento: <p class="info2">${released}</p></p>
+        </span>
+        </div>
+    `
+    return card
+}
+
+const buscarJogos = async (name) => {
+    const container = document.querySelector('.jogosPesquisados')
+    const {results} = await carregarInfos(name);
+    const cards = results.map(createCard);
+    container.replaceChildren(...cards)
+    console.log(cards)
+}
+
+const handleKeypress = ({key, target}) => {
+    if (key === 'Enter') {
+        buscarJogos(target.value);
     }
-  };
+}
 
-const handleClickHawks = async ({ target }) => {
-    //identifica se uma imagem de time foi clicada
-    if (target.classList.value === "logos") {
-      //chamada função para limpar os cards
-      limparElementos(container);
+document.querySelector('#jogo')
+        .addEventListener('keypress', handleKeypress);
+
+
+
+// //function para limpar elementos ao pesquisar
+// const limparElementos = (elemento) => {
+//     while (elemento.firstChild) {
+//       elemento.removeChild(elemento.lastChild);
+//     }
+//   };
+
+// const handleClickHawks = async ({ target }) => {
+//     //identifica se uma imagem de time foi clicada
+//     if (target.classList.value === "logos") {
+//       //chamada função para limpar os cards
+//       limparElementos(container);
   
-      //buscando players por meio do id da imagem
-      const players = await searchPlayers(target.id);
+//       //buscando players por meio do id da imagem
+//       const players = await searchPlayers(target.id);
   
-      players.map(criarImg);
+//       players.map(criarImg);
   
-      document.getElementById("team").value = target.id;
-    }
-  };
-  
-//   document.getElementById("buscar").addEventListener("click", carregarCard);
-  
-//   document
-//     .getElementById("container-teams")
-//     .addEventListener("click", handleClickHawks);
+//       document.getElementById("team").value = target.id;
+//     }
+//   };
 
 
 // const abrirModal = () =>{
-//         document
-//             .getElementById('modal-container')
-//             .classList.add('active')
+//     document
+//         .getElementById('modal-container')
+//         .classList.add('active')
 // } 
+    
+// const fecharModal = () =>{
+//     document
+//         .getElementById('modal-container')
+//         .classList.remove('active')
+// }
+    
+// // Modal
+// document
+//     .getElementById('abrir-modal')
+//     .addEventListener('click', abrirModal)
+    
+// document
+//     .getElementById('fechar')
+//     .addEventListener('click', fecharModal)
 
-const abrirModal = () =>{
-    document
-        .getElementById('modal-container')
-        .classList.add('active')
-} 
-    
-const fecharModal = () =>{
-    document
-        .getElementById('modal-container')
-        .classList.remove('active')
-}
-    
-// Modal
-document
-    .getElementById('abrir-modal')
-    .addEventListener('click', abrirModal)
-    
-document
-    .getElementById('fechar')
-    .addEventListener('click', fecharModal)
-
-document
-    .getElementById('modal-container')
-    .addEventListener('click', fecharModal)
+// document
+//     .getElementById('modal-container')
+//     .addEventListener('click', fecharModal)
