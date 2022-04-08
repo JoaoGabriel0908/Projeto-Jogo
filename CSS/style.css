@@ -4,6 +4,7 @@
 .card-container{
     padding: 10px;
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     height: 100%;
     flex-direction: row;
@@ -19,7 +20,6 @@
     flex-wrap: wrap;
     margin: auto;
     gap: 30px;
-    width: 100%;
 }
 
 .card-jogo{

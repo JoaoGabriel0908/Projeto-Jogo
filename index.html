@@ -9,37 +9,47 @@
     <link rel="stylesheet" href="./CSS/footer.css">
     <link rel="stylesheet" href="./CSS/modal.css">
     <link rel="stylesheet" href="./CSS/main.css">
+    <script src="https://kit.fontawesome.com/d0d3619a1c.js" crossorigin="anonymous"></script>
     <script src="main.js" defer></script>
     <title>Jogos</title>
 </head>
 <body>
-    <header>
-        <div class="pesquisar">
-            <input type="text" placeholder="Procure seu jogo..." id="jogo" list="lista-jogos">
-            <span class="icone">
-            </span>
-        </div>
-        <div class="home"> 
-            <ul>
-                <li>Explore mais</li>
-                <li> <a href="./pages/catalogo.html">Catalogos</a></li>
-                <li>Comunidade</li>
-            </ul>
-        </div>
+    <header class="manuPrinc">
+        <section>
+            <div class="pesquisar">
+                <input type="text" placeholder="Procure seu jogo..." id="jogo" class="jogo" list="lista-jogos">
+                <span class="icone">
+                </span>
+            </div>
+            <div class="home"> 
+                <ul>
+                    <li> <a href="">Explore mais</a></li>
+                    <li> <a href="./pages/catalogo.html">Catalogos</a></li>
+                    <li> <a href="">Comunidade</a></li>
+                </ul>
+            </div>
+            <div class="paginas">
+                <div class="page-action esquerda" id="page-previous"><i class="fa-solid fa-arrow-left"></i></div>
+                <input type="text" id="page" class="page">
+                <span class="page-total" id="page-total"></span>
+                <div class="page-action direita" id="page-next"><i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+        </section>
+        
     </header>
     <main>
+            
         <div class="card-container">
-            <i class="fa-solid fa-arrow-left-long"></i>
+            <div class="card">
+
+            </div>
+        </div>
+
+        <!-- <div class="card-container">
             <div class="card" id="card">
 
             </div>
-            <i class="fa-solid fa-arrow-right-long"></i>
-        </div>
-        <div class="card-container">
-            <div class="card2" id="card">
-
-            </div>
-        </div>
+        </div> -->
 
         <div class="card-container">
             <div class="card-genero" id="card-genero">
@@ -50,6 +60,7 @@
         <div class="jogosPesquisados">
 
         </div>
+
         <div class="modal-container" id="modal-container">
             <div class="modal-content">
                 <section class="modal-inicio">
@@ -69,3 +80,17 @@
             </div>
         </div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            $(window).on("scroll", function() {
+                if ($(window).scrollTop() > 100) {
+                    $(".manuPrinc").addClass("menusecud");
+                } else {
+                    $(".manuPrinc").removeClass("menusecud")
+                }
+            })
+        })
+    </script>
+</body>
+</html>

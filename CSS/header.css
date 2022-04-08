@@ -1,16 +1,27 @@
-header{
+.manuPrinc{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    transition: .4s;
+}
+header section{
+    max-width: 1300px;
+    width: 100%;
     display: flex;
     padding: 20px;
+    justify-content: space-around;
+    align-items: center;
     margin: auto;
+}
+.menusecud{
+    display: flex;
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    max-width: 1300px;
     position: fixed;
     top: 0;
-}
-header::-webkit-scrollbar{
-    background-color: aqua;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.815);
 }
 span.icone{
     position: relative; 
@@ -29,6 +40,7 @@ input{
     padding: 20px;
     opacity: 50%;
     border-radius: 10px;
+    font-size: 22px;
 }
 div.home{
     display: flex;
@@ -60,4 +72,28 @@ div.home ul a:hover{
 div.home ul li:hover{
     background-color: violet;
     color: black;
+}
+
+header .paginas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.paginas span{
+    font-size: 22px;
+    color: blueviolet;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+input.page{
+    width: 100px;
+}
+header .page-action{
+    font-size: 30px;
+}
+header .esquerda{
+    
+}
+header .direita{
+    
 }
