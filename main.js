@@ -127,7 +127,7 @@ const criarGenero = ({name, background_image, genres, released}) => {
 
 const pegandoEnter = ({key, target}) => {
     if(key === 'Enter'){
-        buscarGenero(target.value)
+        buscarJogos(target.value)
     }
 }
 
