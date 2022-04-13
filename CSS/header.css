@@ -74,26 +74,3 @@ div.home ul li:hover{
     color: black;
 }
 
-header .paginas{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-.paginas span{
-    font-size: 22px;
-    color: blueviolet;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-input.page{
-    width: 100px;
-}
-header .page-action{
-    font-size: 30px;
-}
-header .esquerda{
-    
-}
-header .direita{
-    
-}

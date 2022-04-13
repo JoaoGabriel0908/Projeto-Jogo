@@ -1,5 +1,9 @@
 'use strict'
 
+const cardContainer = document.querySelector('.card')
+const loaderContainer = document.querySelector('.loader')
+
+
 // Trazendo os jogos
 const pesquisarJogos = async(page) => {
     const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
@@ -63,18 +67,17 @@ const criarCard = ({background_image, name, genres, parent_platforms, released})
     //</span>
     
     // console.log(parent_platforms)
-    return card;
+    return card
 }
 
+let page = 1;
+
 // Carregando os jogos e mostrando na tela
-const carregarJogos = async(page = 1) => {
+const carregarJogos = async() => {
     const container = document.querySelector('.card')
-    const {results, count} = await pesquisarJogos(`&page=${page}`)
+    const {results} = await pesquisarJogos(`&page=${page}`)
     const cards = results.map(criarCard)
     container.replaceChildren(...cards)
-    document.querySelector('#page').value = page
-    const totalPages = Math.ceil(count / 19)
-    document.querySelector('#page-total').textContent = `/${totalPages}`
     return cards
 }
 
@@ -86,10 +89,43 @@ const carregarJogos2 = async() => {
     const {results} = await pesquisarJogos2()
     const cards = results.map(criarCard)
     container.replaceChildren(...cards)
-    return cards
+    
 }
 
 carregarJogos2()
+
+const trazerGeneros = async() => {
+    const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
+    const url = `https://api.rawg.io/api/genres?key=${apikey}`
+    const response = await fetch(url)
+    const data = await response.json()
+    return data
+}
+
+const cardGenero = ({image_background, name}) => {
+    
+    const card = document.createElement('div')
+    card.classList.add('card-jogo')
+    card.innerHTML = `
+    <span class="card-image-container">
+        <img src=${image_background} class="card-image">
+    </span>
+    <span class="card-nome">
+        <h1>${name}</h1>
+    </span>
+
+`
+return card
+}
+
+const carregarGeneros = async() => {
+    const container = document.querySelector('.card-container-genero')
+    const {results} = await trazerGeneros()
+    const cards = results.map(cardGenero)
+    container.replaceChildren(...cards)
+}
+
+carregarGeneros()
 
 // Pegando a api por generos
 const jogosGeneros = async(genres) => {
@@ -141,7 +177,7 @@ document.querySelector('.jogo')
         .addEventListener('keypress', pegandoEnter);
 
 // Carregando array e trazendo na tela
-const carregarInfos = async (name) =>{
+const carregarInfos = async (name) => {
     const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
     const url = `https://api.rawg.io/api/games?key=${apikey}&search=${name}`
     const response = await fetch(url)
@@ -181,38 +217,64 @@ const buscarJogos = async (name) => {
     return cards
 }
 
-// Pegando o click do enter e pesquisando
-const handleKeypress = ({key, target}) => {
-    if(key === 'Enter'){
-        buscarJogos(target.value)
-    }
+// // Pegando o click do enter e pesquisando
+// const handleKeypress = ({key, target}) => {
+//     if(key === 'Enter'){
+//         buscarJogos(target.value)
+//     }
+// }
+
+// const handlePage = ({key, target}) => {
+//     const pagina = document.querySelector('#page').value
+//     if(key === 'Enter'){
+//         carregarJogos(pagina, target.value)
+//     }
+// }
+
+// const handleNext = () => {
+//     let page = Number (document.querySelector('#page').value);
+//     const totalPage = Number(document.querySelector('#page-total').textContent.replace('/',''))
+//     if(page < totalPage) {
+//         page++;
+
+//         carregarJogos(page)
+//     }
+// }
+
+// const handlePrevious = () => {
+//     let page = Number (document.querySelector('#page').value);
+//     if(page > 1) {
+//         page--;
+
+//         carregarJogos(page)
+//     }
+// }
+
+const getNextPost = () => {
+    page++
+    carregarJogos()
 }
 
-const handlePage = ({key, target}) => {
-    const pagina = document.querySelector('#page').value
-    if(key === 'Enter'){
-        carregarJogos(pagina, target.value)
-    }
+const removeLoader = () => {
+    setTimeout(() => {
+        loaderContainer.classList.remove('show')
+        getNextPost()
+    }, 1000)
 }
 
-const handleNext = () => {
-    let page =Number (document.querySelector('#page').value);
-    const totalPage = Number(document.querySelector('#page-total').textContent.replace('/',''))
-    if(page < totalPage) {
-        page++;
-
-        carregarJogos(page)
-    }
+const showLoading = () => {
+    loaderContainer.classList.add('show')
+    removeLoader()
 }
 
-const handlePrevious = () => {
-    let page =Number (document.querySelector('#page').value);
-    if(page > 1) {
-        page--;
+window.addEventListener('scroll', () => {
+    const {clientHeight, scrollHeight, scrollTop} = document.documentElement
+    const isPageBottom = scrollTop + clientHeight >= scrollHeight -10
 
-        carregarJogos(page)
+    if(isPageBottom) {
+        showLoading()
     }
-}
+})
 
 document.querySelector('.jogo')
         .addEventListener('keypress', handleKeypress);
