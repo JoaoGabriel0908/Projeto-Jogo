@@ -11,6 +11,16 @@
     margin: auto;
     width: 100%;
 }
+.card-container-genero{
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: 100%;
+    flex-direction: row;
+    margin: auto;
+    width: 100%;
+}
 .card-container2{
     margin-top: 200px;
 }
@@ -40,6 +50,12 @@
     max-width: 300px;
     padding: 8px;
     margin: auto;
+}
+
+.card-genero:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 20px violet;
+    transition: box-shadow 1s;
 }
 
 .card-jogo:hover{

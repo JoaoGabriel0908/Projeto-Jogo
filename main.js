@@ -94,39 +94,6 @@ const carregarJogos2 = async() => {
 
 carregarJogos2()
 
-const trazerGeneros = async() => {
-    const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
-    const url = `https://api.rawg.io/api/genres?key=${apikey}`
-    const response = await fetch(url)
-    const data = await response.json()
-    return data
-}
-
-const cardGenero = ({image_background, name}) => {
-    
-    const card = document.createElement('div')
-    card.classList.add('card-jogo')
-    card.innerHTML = `
-    <span class="card-image-container">
-        <img src=${image_background} class="card-image">
-    </span>
-    <span class="card-nome">
-        <h1>${name}</h1>
-    </span>
-
-`
-return card
-}
-
-const carregarGeneros = async() => {
-    const container = document.querySelector('.card-container-genero')
-    const {results} = await trazerGeneros()
-    const cards = results.map(cardGenero)
-    container.replaceChildren(...cards)
-}
-
-carregarGeneros()
-
 // Pegando a api por generos
 const jogosGeneros = async(genres) => {
     const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
@@ -156,15 +123,6 @@ const criarGenero = ({name, background_image, genres, released}) => {
         </span>
     `
     return card
-}
-
-// Carregandos os generos e trazendo no card
-const buscarGenero = async (genres) => {
-    const container = document.querySelector('.card-container')
-    const {results} = await jogosGeneros(genres)
-    const cards = results.map(criarGenero)
-    container.replaceChildren(...cards)
-    console.log(cards)
 }
 
 const pegandoEnter = ({key, target}) => {
@@ -251,7 +209,7 @@ const buscarJogos = async (name) => {
 // }
 
 const getNextPost = () => {
-    page++
+    page++;
     carregarJogos()
 }
 
@@ -269,7 +227,7 @@ const showLoading = () => {
 
 window.addEventListener('scroll', () => {
     const {clientHeight, scrollHeight, scrollTop} = document.documentElement
-    const isPageBottom = scrollTop + clientHeight >= scrollHeight -10
+    const isPageBottom = scrollTop + clientHeight >= scrollHeight -5
 
     if(isPageBottom) {
         showLoading()
