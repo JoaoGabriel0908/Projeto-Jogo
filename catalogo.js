@@ -1,7 +1,7 @@
 'use strict'
 
 // Trazendo os jogos
-const pesquisarJogos = async(page) => {
+const pesquisarJogos = async() => {
     const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
     const url = `https://api.rawg.io/api/games?key=${apikey}`
     const response = await fetch(url)
@@ -56,45 +56,46 @@ const trazerGeneros = async() => {
     return data
 }
 
-const cardGenero = ({image_background, name}) => {
+const cardGenero =  ({image_background, name}) => {
     
     const card = document.createElement('div')
     card.classList.add('card-genero')
-    card.innerHTML = `
-    <span class="card-image-container">
+    card.innerHTML = ` <div onclick=handleClick()>
+    <span class="card-image-container" >
         <img src=${image_background} class="card-image">
     </span>
     <span class="card-nome">
         <h1>${name}</h1>
     </span>
-
+    </div>
 `
 return card
 }
 
-const carregarGeneros = async() => {
+const carregarGeneros = async(name) => {
     const container = document.querySelector('.card-container-genero')
-    const {results} = await trazerGeneros()
+    const {results} = await trazerGeneros(name)
     const cards = results.map(cardGenero)
     container.replaceChildren(...cards)
+    return cards
 }
 
 carregarGeneros()
 
 // Carregando array e trazendo na tela
-const pegarGenero = async (name) => {
+const pegarGenero = async(genres) => {
     const apikey = 'd462cb0d3a6c4874afb375fb232625ca'
-    const url = `https://api.rawg.io/api/games?key=${apikey}&genres=${name}`
+    const url = `https://api.rawg.io/api/games?genres=${genres}&key=${apikey}`
     const response = await fetch(url)
     const data = await response.json()
-    console.log(data)
+    return data
 }
 
 // Criando cards que foi pesquisado pelo usuário
-const createCard = ({background_image, name, genres}) => {
+const createCard = ({background_image, name}) => {
     
     const card = document.createElement('div')
-    card.classList.add('card')
+    card.classList.add('card-jogo')
     card.innerHTML = `
         <span class="card-image-container">
             <img src=${background_image} class="card-image">
@@ -107,19 +108,27 @@ const createCard = ({background_image, name, genres}) => {
 }
 
 // Buscando jogos que o usuário trouxe
-const buscarGeneros = async (name) => {
+const buscarGeneros = async (genres) => {
     const container = document.querySelector('.jogosPesquisados')
-    const {results} = await pegarGenero(name);
+    const {results} = await pegarGenero(genres);
     const cards = results.map(createCard);
     container.replaceChildren(...cards)
+    console.log(cards)
     return cards
 }
 
-const pegandoEnter = async ({key, target}) => {
+const pegandoEnter =  async ({key, target}) => {
     if(key === 'Enter'){
-        await buscarGenero(target.value)
+        await buscarGeneros(target.value)
     }
 }
 
 document.querySelector('#genero')
         .addEventListener('keypress', pegandoEnter);
+
+
+const handleClick = async ({target}) => {
+    carregarGeneros(target.results)
+}
+
+    

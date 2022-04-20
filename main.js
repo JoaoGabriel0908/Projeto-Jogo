@@ -70,29 +70,29 @@ const criarCard = ({background_image, name, genres, parent_platforms, released})
     return card
 }
 
-let page = 1;
-
 // Carregando os jogos e mostrando na tela
-const carregarJogos = async() => {
+const carregarJogos = async(page=1) => {
     const container = document.querySelector('.card')
-    const {results} = await pesquisarJogos(`&page=${page}`)
+    const {results, count} = await pesquisarJogos(`&page=${page}`)
     const cards = results.map(criarCard)
     container.replaceChildren(...cards)
-    return cards
+    const totalPage = Math.ceil (count/19);
+    document.querySelector('#pageTotal').textContent = `/ ${totalPage}`;
+    document.querySelector('#page').value = page    
 }
 
 carregarJogos()
 
 // Carregando os jogos e mostrando na tela
-const carregarJogos2 = async() => {
-    const container = document.querySelector('.card2')
-    const {results} = await pesquisarJogos2()
-    const cards = results.map(criarCard)
-    container.replaceChildren(...cards)
+// const carregarJogos2 = async() => {
+//     const container = document.querySelector('.card2')
+//     const {results} = await pesquisarJogos2()
+//     const cards = results.map(criarCard)
+//     container.replaceChildren(...cards)
     
-}
+// }
 
-carregarJogos2()
+// carregarJogos2()
 
 // Pegando a api por generos
 const jogosGeneros = async(genres) => {
@@ -146,7 +146,7 @@ const carregarInfos = async (name) => {
 const createCard = ({background_image, name, genres, released}) => {
     
     const card = document.createElement('div')
-    card.classList.add('card')
+    card.classList.add('card-jogo')
     card.innerHTML = `
         <span class="card-image-container">
             <img src=${background_image} class="card-image">
@@ -182,60 +182,31 @@ const buscarJogos = async (name) => {
 //     }
 // }
 
-// const handlePage = ({key, target}) => {
-//     const pagina = document.querySelector('#page').value
-//     if(key === 'Enter'){
-//         carregarJogos(pagina, target.value)
-//     }
-// }
-
-// const handleNext = () => {
-//     let page = Number (document.querySelector('#page').value);
-//     const totalPage = Number(document.querySelector('#page-total').textContent.replace('/',''))
-//     if(page < totalPage) {
-//         page++;
-
-//         carregarJogos(page)
-//     }
-// }
-
-// const handlePrevious = () => {
-//     let page = Number (document.querySelector('#page').value);
-//     if(page > 1) {
-//         page--;
-
-//         carregarJogos(page)
-//     }
-// }
-
-const getNextPost = () => {
-    page++;
-    carregarJogos()
-}
-
-const removeLoader = () => {
-    setTimeout(() => {
-        loaderContainer.classList.remove('show')
-        getNextPost()
-    }, 1000)
-}
-
-const showLoading = () => {
-    loaderContainer.classList.add('show')
-    removeLoader()
-}
-
-window.addEventListener('scroll', () => {
-    const {clientHeight, scrollHeight, scrollTop} = document.documentElement
-    const isPageBottom = scrollTop + clientHeight >= scrollHeight -5
-
-    if(isPageBottom) {
-        showLoading()
+const handlePage = ({key, target}) => {
+    const pagina = document.querySelector('#page').value
+    if(key === 'Enter'){
+        carregarJogos(pagina, target.value)
     }
-})
+}
 
-document.querySelector('.jogo')
-        .addEventListener('keypress', handleKeypress);
+const handleNext = () => {
+    let page = Number (document.querySelector('#page').value);
+    const totalPages = Number(document.querySelector('#pageTotal').textContent.replace('/',' '))
+    if(page < totalPages) {
+        page++;
+
+        carregarJogos(page)
+    }
+}
+
+const handlePrevious = () => {
+    let page = Number (document.querySelector('#page').value);
+    if(page > 1) {
+        page--;
+
+        carregarJogos(page)
+    }
+}
 
 document.querySelector('#page')
         .addEventListener('keypress', handlePage)
