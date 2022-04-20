@@ -8,9 +8,10 @@
     flex-wrap: wrap;
     gap: 10px;
     height: 100%;
-    flex-direction: row;
+    flex-direction: column;
     margin: auto;
     width: 100%;
+
 }
 .card-container > h1{
     margin: auto;
@@ -22,6 +23,7 @@
     border-radius: 25px;
     background-color: blueviolet;
     margin-bottom: 50px;
+    display: flex;
 }
 .card-container-genero{
     padding: 10px;

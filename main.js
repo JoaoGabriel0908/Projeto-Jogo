@@ -192,6 +192,9 @@ const handlePage = ({key, target}) => {
 const handleNext = () => {
     let page = Number (document.querySelector('#page').value);
     const totalPages = Number(document.querySelector('#pageTotal').textContent.replace('/',' '))
+    setTimeout(() => {
+        window.location.href = "index.html#card-container"
+    }, 500) 
     if(page < totalPages) {
         page++;
 
@@ -216,6 +219,8 @@ document.querySelector('#page-next')
 
 document.querySelector('#page-previous')
         .addEventListener('click', handlePrevious)
+
+
 
 // //function para limpar elementos ao pesquisar
 // const limparElementos = (elemento) => {
