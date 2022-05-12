@@ -60,14 +60,14 @@ const cardGenero =  ({image_background, name}) => {
     
     const card = document.createElement('div')
     card.classList.add('card-genero')
-    card.innerHTML = ` <div onclick=handleClick()>
-    <span class="card-image-container" >
-        <img src=${image_background} class="card-image">
-    </span>
-    <span class="card-nome">
-        <h1>${name}</h1>
-    </span>
-    </div>
+    card.innerHTML = ` <div onclick=handleClick(this)>
+                            <span class="card-image-container" >
+                                <img src=${image_background} class="card-image">
+                            </span>
+                            <span class="card-nome">
+                                ${name}
+                            </span>
+                    </div>
 `
 return card
 }
@@ -110,7 +110,7 @@ const createCard = ({background_image, name}) => {
 // Buscando jogos que o usuário trouxe
 const buscarGeneros = async (genres) => {
     const container = document.querySelector('.jogosPesquisados')
-    const {results} = await pegarGenero(genres);
+    const {results} = await pegarGenero(genres.toLowerCase());
     const cards = results.map(createCard);
     container.replaceChildren(...cards)
     console.log(cards)
@@ -126,9 +126,14 @@ const pegandoEnter =  async ({key, target}) => {
 document.querySelector('#genero')
         .addEventListener('keypress', pegandoEnter);
 
+        
 
-const handleClick = async ({target}) => {
-    carregarGeneros(target.results)
+
+// document.querySelector('.card-container-genero').addEventListener('click', selecionarCard)
+
+const handleClick = async (card) => {
+    const genero =  card.querySelector('.card-nome').textContent.trim()
+    await buscarGeneros(genero)
 }
 
     
